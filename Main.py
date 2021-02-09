@@ -19,7 +19,20 @@ cal=Calendar()
 cal.add("prodid", "반복일정 생성기 (leeexpert@cau.ac.kr)")
 cal.add("version", "1.0")
 
-def addEvent(sumTxt, stYr, yrSt, mnt, oneDgt, )
+def addEventZero(sumTxt, stYr, yrSt, mnt, oneDgt, tenDgt):
+    event = Event()
+    event.add("summary", summaryText)
+    event.add("dtstart", datetime(startYear + i, month, oneDigit, 1, 0, 0, tzinfo=pytz.utc))
+    event.add("dtend", datetime(startYear + i, month, oneDigit, 1, 0, 0, tzinfo=pytz.utc))
+    # UTC => 서울 시간 보정 필요
+    event.add("dtstamp", datetime(currDate[0], currDate[1], currDate[2], currTime[0], currTime[1], currTime[2]))
+
+def addEvent(sumTxt, stYr, yrSt, mnt, oneDgt, tenDgt):
+    event = Event()
+    event.add("summary", summaryText)
+    event.add("dtstart", datetime(startYear + i, month, tenDigit + oneDigit, 1, 0, 0, tzinfo=pytz.utc))
+    event.add("dtend", datetime(startYear + i, month, tenDigit + oneDigit, 1, 0, 0, tzinfo=pytz.utc))
+    event.add("dtstamp", datetime(currDate[0], currDate[1], currDate[2], currTime[0], currTime[1], currTime[2]))
 
 for yearStep in range(0, splitDate[0]+1-startYear)
     for month in range(1, 13)
@@ -27,18 +40,9 @@ for yearStep in range(0, splitDate[0]+1-startYear)
             dayStr=tenDigit+oneDigit
 
             if tenDigit=="0":
-                event = Event()
-                event.add("summary", summaryText)
-                event.add("dtstart", datetime(startYear+i, month, oneDigit, 1, 0, 0, tzinfo=pytz.utc))
-                event.add("dtend", datetime(startYear+i, month, oneDigit, 1, 0, 0, tzinfo=pytz.utc))
-                # UTC => 서울 시간 보정 필요
-                event.add("dtstamp", datetime(currDate[0], currDate[1], currDate[2], currTime[0], currTime[1], currTime[2]))
+                addEvent(summaryText, startYear, yearStep, month, oneDigit, tenDigit)
 
             elif tenDigit!="0":
-                event=Event()
-                event.add("summary", summaryText)
-                event.add("dtstart", datetime(startYear+i, month, tenDigit+oneDigit, 1, 0, 0, tzinfo=utc))
-                event.add("dtend", datetime(startYear+i, month, tenDigit+oneDigit, 1, 0, 0, tzinfo=utc))
-                event.add("dtstamp", datetime(currDate[0], currDate[1], currDate[2], currTime[0], currTime[1], currTime[2]))
 
-            elif month=="int(tenDigit+oneDigit)>
+
+            elif "int(tenDigit+oneDigit)>
