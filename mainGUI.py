@@ -9,7 +9,7 @@ class main(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle("Father's Holiday")
+        self.setWindowTitle("Father's Holiday 1.0")
         self.setFixedSize(622, 636)
         self.initEnv()
         self.statusBar().showMessage("오늘은 : "+self.splitDate[0]+"년 "+self.splitDate[1]+"월 "+self.splitDate[2]+"일")
@@ -47,10 +47,10 @@ class main(QMainWindow, form_class):
 
         self.startYear = self.splitDate[0]
         self.endYear = self.splitDate[0]
-        self.summaryText = self.description.text()
         self.outputDir=""
         self.summaryText=""
         self.oneDigit=self.repeatNumSpinBox.value()
+        self.fileName=""
 
     def selectDir(self):
         dirStr = QFileDialog.getExistingDirectory(self, "경로 선택", "./")
@@ -60,7 +60,7 @@ class main(QMainWindow, form_class):
             self.outputDir = dirStr
 
     def startYearChanged(self):
-        self.startYear = self.startYearSpinBox.value() #QSpinBox의 value는 string
+        self.startYear = self.startYearSpinBox.value() #QSpinBox의 value는 int
 
     def endYearChanged(self):
         self.endYear = self.endYearSpinBox.value()
@@ -82,8 +82,9 @@ class main(QMainWindow, form_class):
             notice=QMessageBox.information(self, "경고", "경로를 선택하십시오.")
         else:
             self.summaryText=self.description.text()
+            self.fileName = self.fileNameEdit.text()
             Core.doAction(self.oneDigit, self.startYear,
-                          self.endYear, self.summaryText, self.outputDir)
+                          self.endYear, self.summaryText, self.outputDir, self.fileName)
 
 if __name__=="__main__":
     app=QApplication(sys.argv)

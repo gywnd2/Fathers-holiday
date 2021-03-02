@@ -10,7 +10,7 @@ splitTime = currTime.split(":"  )
 
 # 캘린더 생성
 cal = Calendar()
-cal.add("prodid", "-// 반복일정 생성기 // 이효중 // leeexpert@cau.ac.kr //")
+cal.add("prodid", "-// 반복일정 생성기 1.0 // 이효중 // leeexpert@cau.ac.kr //")
 cal.add("version", "1.0")
 calendar = cal
 
@@ -57,7 +57,7 @@ def isOver(dayStr, year, month):
         else:
             return False
 
-def doAction(oneDigit, startYear, endYear, summaryText, outputDir):
+def doAction(oneDigit, startYear, endYear, summaryText, outputDir, fileName):
 
     # 종료년도 까지 while을 통해 반복
     currLoopYear = int(startYear)
@@ -67,17 +67,13 @@ def doAction(oneDigit, startYear, endYear, summaryText, outputDir):
         for month in range(1, 13):
             for tenDigit in range(0, 4):
                 dayStr = str(tenDigit) + str(oneDigit)
-                print("%d년 %d월 %s일을 %d번째 이벤트로 추가합니다." % ((int(startYear) + yearStep), month, dayStr, eventIndex))
                 if isOver(dayStr, int(startYear) + yearStep, month) == True:
-                    print("break")
                     break
                 elif isOver(dayStr, int(startYear) + yearStep, month) == False:
                     if tenDigit == 0:
-                        print("isOver 통과")
                         addEvent(summaryText, int(startYear), yearStep, month, int(oneDigit), tenDigit, True)
 
                     elif tenDigit != 0:
-                        print("isOver 통과")
                         addEvent(summaryText, int(startYear), yearStep, month, int(oneDigit), tenDigit, False)
         yearStep += 1
         currLoopYear += 1
@@ -85,6 +81,7 @@ def doAction(oneDigit, startYear, endYear, summaryText, outputDir):
     for index in range(0, eventIndex):
         calendar.add_component(eventList[index])
 
-    f = open(os.path.join(outputDir, "MyCal.ics"), 'wb')
+    fileName=fileName+".ics"
+    f = open(os.path.join(outputDir, fileName), 'wb')
     f.write(calendar.to_ical())
     f.close()
