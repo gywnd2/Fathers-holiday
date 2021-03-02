@@ -24,8 +24,12 @@ def addEvent(summaryText, startYear, yearStep, month, oneDigit, tenDigit, isZero
     event.add("summary", summaryText)
 
     if isZero == True:
-        event.allday = True
-        event.add("dtstart", date(startYear + yearStep, month, oneDigit))
+        if oneDigit==0:
+            pass
+
+        else:
+            event.allday = True
+            event.add("dtstart", date(startYear + yearStep, month, oneDigit))
 
     else:
         event.allday = True
@@ -53,7 +57,7 @@ def isOver(dayStr, year, month):
         else:
             return False
 
-def doAction(oneDigit, eventIndex, eventList, calendar, startYear, endYear, summaryText, outputDir):
+def doAction(oneDigit, startYear, endYear, summaryText, outputDir):
 
     # 종료년도 까지 while을 통해 반복
     currLoopYear = int(startYear)
@@ -78,7 +82,7 @@ def doAction(oneDigit, eventIndex, eventList, calendar, startYear, endYear, summ
         yearStep += 1
         currLoopYear += 1
 
-    for index in range(0, eventIndex+1):
+    for index in range(0, eventIndex):
         calendar.add_component(eventList[index])
 
     f = open(os.path.join(outputDir, "MyCal.ics"), 'wb')

@@ -50,7 +50,6 @@ class main(QMainWindow, form_class):
         self.summaryText = self.description.text()
         self.outputDir=""
         self.summaryText=""
-        self.eventIndex=0
         self.oneDigit=self.repeatNumSpinBox.value()
 
     def selectDir(self):
@@ -61,7 +60,7 @@ class main(QMainWindow, form_class):
             self.outputDir = dirStr
 
     def startYearChanged(self):
-        self.startYear = self.startYearSpinBox.value()
+        self.startYear = self.startYearSpinBox.value() #QSpinBox의 value는 string
 
     def endYearChanged(self):
         self.endYear = self.endYearSpinBox.value()
@@ -83,8 +82,8 @@ class main(QMainWindow, form_class):
             notice=QMessageBox.information(self, "경고", "경로를 선택하십시오.")
         else:
             self.summaryText=self.description.text()
-            Core.doAction(self.oneDigit, self.eventIndex, self.eventList, self.calendar, self.startYear,
-                          self.endYear, self.summaryText, self.outputDir, self.eventIndex, self.eventList)
+            Core.doAction(self.oneDigit, self.startYear,
+                          self.endYear, self.summaryText, self.outputDir)
 
 if __name__=="__main__":
     app=QApplication(sys.argv)
