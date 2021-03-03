@@ -1,9 +1,15 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore
 from datetime import date, datetime
-import pytz, sys, Core
+import sys, Core, os
 
-form_class = uic.loadUiType("Main.ui")[0]
+# .ui파일 include 시키기 위한 부분 ~12행
+def resource_path(relative_path):
+    base_path=getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+form=resource_path('Main.ui')
+form_class = uic.loadUiType(form)[0]
 
 class main(QMainWindow, form_class):
     def __init__(self):
@@ -57,7 +63,8 @@ class main(QMainWindow, form_class):
 
         if dirStr:
             self.dirText.setText(dirStr)
-            self.outputDir = dirStr
+            # exe빌드 후 실행 시 오류 발생 의심부분 (절대경로)
+            self.outputDir = os.path.abspath(dirStr)
 
     def startYearChanged(self):
         self.startYear = self.startYearSpinBox.value() #QSpinBox의 value는 int
